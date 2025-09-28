@@ -86,6 +86,7 @@ const styles = StyleSheet.create({
     marginTop: -250,
     marginBottom: 100,
   },
+
 });
 
-export default styles; 
+export default styles;
