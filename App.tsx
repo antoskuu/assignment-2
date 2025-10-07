@@ -1,30 +1,65 @@
-import { StatusBar, StyleSheet, useColorScheme, View, Text, Button, ScrollView, TouchableOpacity, ImageBackground, Image } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
-import LinearGradient from 'react-native-linear-gradient';
-import HomePage from './screens/homepage';
-import styles from './styles/styles.jsx';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import HomeScreen from './screens/home.jsx'
+import MenuScreen from './screens/menu.jsx'
+import { Image } from 'react-native';
 
-function App() {
-  const isDarkMode = useColorScheme() === 'dark';
+const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
+
+function HomeStack() {
   return (
-    <SafeAreaProvider>
-      <StatusBar barStyle={'light-content'} />
-      <AppContent />
-    </SafeAreaProvider>
+    <Stack.Navigator>
+      <Stack.Screen name="Home" component={HomeScreen} options={{headerShown:false}}/>
+    </Stack.Navigator>
   );
 }
 
-function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
-
+function MenuStack() {
   return (
-    <View style={[styles.container, { paddingTop: safeAreaInsets.top }]}>
-      <HomePage />
-    </View>
+    <Stack.Navigator>
+      <Stack.Screen name="Settings" component={MenuScreen} options={{headerShown:false}}/>
+    </Stack.Navigator>
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Tab.Navigator >
+        <Tab.Screen name="HomeTab" component={HomeStack}  options={{
+            headerShown: false,
+            tabBarIcon: ({ color, size, focused }) => (
+              <Image
+                source={require('./assets/home.png')}
+                style={{
+                  width: size,
+                  height: size,
+                  tintColor: color,
+                  // petit effet focus optionnel:
+                  opacity: focused ? 1 : 0.6
+                }}
+                resizeMode="contain"
+              />
+            ),
+            tabBarLabel: 'Home'
+          }}/>
+        <Tab.Screen name="MenuTab" component={MenuStack} options={{headerShown:false, tabBarIcon: ({ color, size, focused }) => (
+              <Image
+                source={require('./assets/burger.png')}
+                style={{
+                  width: size,
+                  height: size,
+                  tintColor: color,
+                  opacity: focused ? 1 : 0.6
+                }}
+                resizeMode="contain"
+              />
+            ),
+            tabBarLabel: 'Menu'
+          }}/>
+      </Tab.Navigator>
+    </NavigationContainer>
+  );
+}
