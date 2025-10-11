@@ -9,8 +9,8 @@ import CardGrid from '../components/cardGrid.jsx'
 import data from '../database/dummydata.js'
 
 const HomeScreen = ({navigation}) => {
-    const burgerItems = data.burgers
-    const drinkItems = data.drinks
+    const burgerItems = data.burgers.items
+    const drinkItems = data.drinks.items
   const [meatFilter, setMeatFilter] = useState('beef'); 
 
   const filteredBurgers = burgerItems.filter(b => b.meat === meatFilter);
@@ -49,7 +49,7 @@ const HomeScreen = ({navigation}) => {
           />
         </ImageBackground>
         
-        <View style={{height: 280, backgroundColor: '#fff7c8ff'}}>
+        <View style={{backgroundColor: '#fff7c8ff'}}>
           <Text style={styles.text}>Burgers</Text>
           <View style={{ flexDirection: 'row', paddingHorizontal: 10, marginBottom: 8 }}>
             <TouchableOpacity

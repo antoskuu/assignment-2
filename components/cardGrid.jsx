@@ -1,24 +1,37 @@
-import { StatusBar, StyleSheet, useColorScheme, View, Text, Button, ScrollView, TouchableOpacity, ImageBackground, Image } from 'react-native';
+import { Pressable, TouchableOpacity, View, Dimensions } from 'react-native';
 
 
 import Card from './card.jsx'
 
-const CardGrid = ({ items = []}) => {
+const ITEM_SPACING = 30;
+
+
+const CardGrid = ({ items = [], onItemPress }) => {
 return (
-    <ScrollView 
-    horizontal
-    contentContainerStyle={{ paddingHorizontal: 10}}
-    style={{flexDirection: "row" }}
-    showsHorizontalScrollIndicator={false}
+    <View 
+    style={{
+        flex:1,
+        flexDirection: "row",           
+        flexWrap: 'wrap',
+        justifyContent: 'center' ,
+        alignContent: 'flex-start',
+
+} }
+
 >
     {items.map(item => (
-        <View
-        key={item.id || item.title} style = {{margin:10}}
+        <Pressable
+          key={item.id || item.title}
+          onPress={() => onItemPress?.(item)}
+          style={{
+            margin: ITEM_SPACING / 2,
+
+      }}
         >
-        <Card {...item} />
-        </View>
+          <Card {...item} />
+        </Pressable>
     ))}
-    </ScrollView>
+    </View>
 );
 };
 

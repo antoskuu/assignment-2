@@ -4,6 +4,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from './screens/home.jsx'
 import MenuScreen from './screens/menu.jsx'
 import { Image } from 'react-native';
+import CategoryDetailScreen from './screens/detailofcategory.jsx'
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -20,15 +22,17 @@ function MenuStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Settings" component={MenuScreen} options={{headerShown:false}}/>
+      <Stack.Screen name="CategoryDetail" component={CategoryDetailScreen} options={{headerShown:false}}/>
     </Stack.Navigator>
   );
 }
 
 export default function App() {
   return (
+    <SafeAreaView style={{flex:1}}>
     <NavigationContainer>
-      <Tab.Navigator >
-        <Tab.Screen name="HomeTab" component={HomeStack}  options={{
+      <Tab.Navigator>
+        <Tab.Screen name="HomeTab" component={HomeStack} options={{
             headerShown: false,
             tabBarIcon: ({ color, size, focused }) => (
               <Image
@@ -37,7 +41,6 @@ export default function App() {
                   width: size,
                   height: size,
                   tintColor: color,
-                  // petit effet focus optionnel:
                   opacity: focused ? 1 : 0.6
                 }}
                 resizeMode="contain"
@@ -45,7 +48,9 @@ export default function App() {
             ),
             tabBarLabel: 'Home'
           }}/>
-        <Tab.Screen name="MenuTab" component={MenuStack} options={{headerShown:false, tabBarIcon: ({ color, size, focused }) => (
+        <Tab.Screen name="MenuTab" component={MenuStack} options={{
+            headerShown:false, 
+            tabBarIcon: ({ color, size, focused }) => (
               <Image
                 source={require('./assets/burger.png')}
                 style={{
@@ -61,5 +66,6 @@ export default function App() {
           }}/>
       </Tab.Navigator>
     </NavigationContainer>
+    </SafeAreaView>
   );
 }
