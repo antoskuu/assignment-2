@@ -3,14 +3,25 @@ import styles from '../styles/styles.jsx';
 import CardGrid from '../components/cardGrid.jsx'
 import data from '../database/dummydata.js'
 import { StatusBar, StyleSheet, useColorScheme, View, Text, Button, ScrollView, TouchableOpacity, ImageBackground, Image } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const CategoryDetailScreen = ({route}) => {
     const { categoryTitle, items } = route.params;
+    const navigation = useNavigation();
     
     return (
     <ScrollView>
     <View style={{backgroundColor: '#fff7c8ff'}}>
-        
+    <TouchableOpacity 
+            onPress={() => navigation.goBack()}
+            style={{
+                padding: 10,
+                margin: 10,
+                alignSelf: 'flex-start'
+            }}
+        >
+            <Text style={{ fontSize: 24 }}>←</Text>
+        </TouchableOpacity>        
         <Text style={styles.text}>{categoryTitle}</Text>
         
         <CardGrid items={items} />
