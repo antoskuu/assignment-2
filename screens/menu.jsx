@@ -11,7 +11,7 @@ import { useNavigation } from '@react-navigation/native';
 const MenuScreen = () => {
     const navigation = useNavigation();
     const [categories, setCategories] = useState([]);
-    const API_BASE = Platform.OS === 'android' ? 'http://10.0.2.2:3000' : 'http://localhost:3000';
+    const API_BASE = Platform.OS === 'android' ? 'http://10.0.2.2:8000' : 'http://127.0.0.1:8000';
 
     useEffect(() => {
         const getCategories = async () => {
@@ -21,7 +21,7 @@ const MenuScreen = () => {
             
             const categoriesWithImageUrls = data.map(category => ({
                 ...category,
-                image: `${API_BASE}/${category.image}`
+                image: `${API_BASE}/images/${category.image}`
             }));
             
             setCategories(categoriesWithImageUrls);

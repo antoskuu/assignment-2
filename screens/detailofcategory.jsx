@@ -7,11 +7,11 @@ import { useNavigation } from '@react-navigation/native';
 const CategoryDetailScreen = ({route}) => {
     const { categoryTitle, items } = route.params;
     const navigation = useNavigation();
-    const API_BASE = Platform.OS === 'android' ? 'http://10.0.2.2:3000' : 'http://localhost:3000';
+    const API_BASE = Platform.OS === 'android' ? 'http://10.0.2.2:8000' : 'http://127.0.0.1:8000';
     
     const itemsWithImageUrls = items.map(item => ({
         ...item,
-        image: `${API_BASE}/${item.image}`
+        image: `${API_BASE}/images/${item.image}`
     }));
     console.log(itemsWithImageUrls);
 
