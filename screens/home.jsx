@@ -1,23 +1,16 @@
 import React, {useState} from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Text, ScrollView, TouchableOpacity, ImageBackground, Image } from 'react-native';
 
-// Wanted to try adding a gradient overlay
 import LinearGradient from 'react-native-linear-gradient';
 import styles from '../styles/styles.jsx';
-import CardGrid from '../components/cardGrid.jsx'
-import data from '../database/dummydata.js'
 
-const HomeScreen = ({navigation}) => {
-    const burgerItems = data.burgers.items
-    const drinkItems = data.drinks.items
-  const [meatFilter, setMeatFilter] = useState('beef'); 
 
-  const filteredBurgers = burgerItems.filter(b => b.meat === meatFilter);
+const HomeScreen = ({navigation}) => {    
+
     return (
 <ScrollView style={styles.ScrollView} contentContainerStyle={styles.scrollContent}>
         <ImageBackground
-          source={require('../assets/burger.jpg')}
+          source={require('../assets/app/burger.jpg')}
           style={styles.backgroundImage}
           resizeMode='cover'
         >
@@ -29,7 +22,7 @@ const HomeScreen = ({navigation}) => {
           />
           
           <View style={styles.contentOverlay}>
-            <Image source={require('../assets/logo.png')} style={styles.logo} />
+            <Image source={require('../assets/app/logo.png')} style={styles.logo} />
             <Text style={styles.text}>The best burgers in town! - Trondheim</Text>
             <View style={styles.buttonContainer}>
               <TouchableOpacity style={styles.mainButton} onPress={() => navigation.navigate('MenuTab')} >
@@ -49,39 +42,8 @@ const HomeScreen = ({navigation}) => {
           />
         </ImageBackground>
         
-        <View style={{backgroundColor: '#fff7c8ff'}}>
-          <Text style={styles.text}>Burgers</Text>
-          <View style={{ flexDirection: 'row', paddingHorizontal: 10, marginBottom: 8 }}>
-            <TouchableOpacity
-              onPress={() => setMeatFilter('beef')}
-              style={{
-                backgroundColor: meatFilter === 'beef' ? '#c52a59ff' : '#59595993',
-                paddingVertical: 6,
-                paddingHorizontal: 14,
-                borderRadius: 20,
-                marginRight: 8,
-              }}
-            >
-              <Text style={{ color: 'white', fontSize: 12 }}>Beef</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => setMeatFilter('chicken')}
-              style={{
-                backgroundColor: meatFilter === 'chicken' ? '#c52a59ff' : '#59595993',
-                paddingVertical: 6,
-                paddingHorizontal: 14,
-                borderRadius: 20,
-              }}
-            >
-              <Text style={{ color: 'white', fontSize: 12 }}>Chicken</Text>
-            </TouchableOpacity>
-          </View>
-          <CardGrid items={filteredBurgers} />
-        </View>
-        
-
         <ImageBackground 
-          source={require('../assets/restaurant.jpg')}
+          source={require('../assets/app/restaurant.jpg')}
           style={styles.backgroundImage}
           resizeMode='cover'
         ></ImageBackground>

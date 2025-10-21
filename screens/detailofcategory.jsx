@@ -1,14 +1,20 @@
 import React, {useState} from "react";
 import styles from '../styles/styles.jsx';
 import CardGrid from '../components/cardGrid.jsx'
-import data from '../database/dummydata.js'
-import { StatusBar, StyleSheet, useColorScheme, View, Text, Button, ScrollView, TouchableOpacity, ImageBackground, Image } from 'react-native';
+import { StatusBar, StyleSheet, useColorScheme, View, Text, Button, ScrollView, TouchableOpacity, ImageBackground, Image, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 const CategoryDetailScreen = ({route}) => {
     const { categoryTitle, items } = route.params;
     const navigation = useNavigation();
+    const API_BASE = Platform.OS === 'android' ? 'http://10.0.2.2:3000' : 'http://localhost:3000';
     
+    const itemsWithImageUrls = items.map(item => ({
+        ...item,
+        image: `${API_BASE}/${item.image}`
+    }));
+    console.log(itemsWithImageUrls);
+
     return (
     <ScrollView>
     <View style={{backgroundColor: '#fff7c8ff'}}>
@@ -24,12 +30,12 @@ const CategoryDetailScreen = ({route}) => {
         </TouchableOpacity>        
         <Text style={styles.text}>{categoryTitle}</Text>
         
-        <CardGrid items={items} />
+        <CardGrid items={itemsWithImageUrls} />
     </View>
 
 
         <ImageBackground 
-          source={require('../assets/restaurant.jpg')}
+          source={require('../assets/app/restaurant.jpg')}
           style={styles.backgroundImage}
           resizeMode='cover'
         ></ImageBackground>

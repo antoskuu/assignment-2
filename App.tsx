@@ -36,7 +36,7 @@ export default function App() {
             headerShown: false,
             tabBarIcon: ({ color, size, focused }) => (
               <Image
-                source={require('./assets/home.png')}
+                source={require('./assets/app/home.png')}
                 style={{
                   width: size,
                   height: size,
@@ -52,7 +52,7 @@ export default function App() {
             headerShown:false, 
             tabBarIcon: ({ color, size, focused }) => (
               <Image
-                source={require('./assets/burger.png')}
+                source={require('./assets/app/burger.png')}
                 style={{
                   width: size,
                   height: size,
