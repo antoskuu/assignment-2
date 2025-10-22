@@ -4,39 +4,29 @@ import styles from '../styles/styles.jsx';
 import CardGrid from '../components/cardGrid.jsx'
 import { StatusBar, StyleSheet, useColorScheme, View, Text, Button, ScrollView, TouchableOpacity, ImageBackground, Image, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-
+import {getCategories} from '../services/productsApi.js';
 
 
 
 const MenuScreen = () => {
     const navigation = useNavigation();
     const [categories, setCategories] = useState([]);
-    const API_BASE = Platform.OS === 'android' ? 'http://10.0.2.2:8000' : 'http://127.0.0.1:8000';
 
     useEffect(() => {
-        const getCategories = async () => {
-            console.log("fetching categories");
-            const response = await fetch(`${API_BASE}/categories`);
-            const data = await response.json();
-            
-            const categoriesWithImageUrls = data.map(category => ({
-                ...category,
-                image: `${API_BASE}/images/${category.image}`
-            }));
-            
-            setCategories(categoriesWithImageUrls);
-        };
-        getCategories();
-    }, []);
+    const fetchCategories = async () => {
+        const data = await getCategories();
+        setCategories(data);
+    };
+    fetchCategories();
+}, []);
 
     const handleCategoryPress = (category) => {
         console.log("clicked")
         navigation.navigate('CategoryDetail', {
             categoryTitle: category.title,
-            items: category.items
+            categoryItems: category.items,
         });
     };
-
     
     return (
         <ScrollView>
@@ -46,7 +36,7 @@ const MenuScreen = () => {
                 <Text style={styles.text}>Categories</Text>
                 <View style={{ flexDirection: 'row', paddingHorizontal: 10, marginBottom: 8 }}>
                 </View>
-                <CardGrid items={categories} onItemPress={handleCategoryPress}/>
+                <CardGrid cart_bool={false} items={categories} onItemPress={handleCategoryPress}/>
             </View>
             
             <ImageBackground 
@@ -57,5 +47,4 @@ const MenuScreen = () => {
         </ScrollView>
     )
 }
-
 export default MenuScreen;

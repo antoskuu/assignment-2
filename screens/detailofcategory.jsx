@@ -3,18 +3,13 @@ import styles from '../styles/styles.jsx';
 import CardGrid from '../components/cardGrid.jsx'
 import { StatusBar, StyleSheet, useColorScheme, View, Text, Button, ScrollView, TouchableOpacity, ImageBackground, Image, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { getProductsWithImageUrls } from "../services/productsApi.js";
 
 const CategoryDetailScreen = ({route}) => {
-    const { categoryTitle, items } = route.params;
+    const { categoryTitle, categoryItems } = route.params;
     const navigation = useNavigation();
-    const API_BASE = Platform.OS === 'android' ? 'http://10.0.2.2:8000' : 'http://127.0.0.1:8000';
-    
-    const itemsWithImageUrls = items.map(item => ({
-        ...item,
-        image: `${API_BASE}/images/${item.image}`
-    }));
-    console.log(itemsWithImageUrls);
 
+    const itemsWithImageUrls = getProductsWithImageUrls(categoryItems);
     return (
     <ScrollView>
     <View style={{backgroundColor: '#fff7c8ff'}}>
@@ -30,14 +25,14 @@ const CategoryDetailScreen = ({route}) => {
         </TouchableOpacity>        
         <Text style={styles.text}>{categoryTitle}</Text>
         
-        <CardGrid items={itemsWithImageUrls} />
+        <CardGrid cart_bool={true} items={itemsWithImageUrls} />
     </View>
 
 
         <ImageBackground 
-          source={require('../assets/app/restaurant.jpg')}
-          style={styles.backgroundImage}
-          resizeMode='cover'
+        source={require('../assets/app/restaurant.jpg')}
+        style={styles.backgroundImage}
+        resizeMode='cover'
         ></ImageBackground>
 </ScrollView>
     )
@@ -47,34 +42,3 @@ const CategoryDetailScreen = ({route}) => {
 
 
 export default CategoryDetailScreen;
-
-// const [meatFilter, setMeatFilter] = useState('beef');
-    
-//     const filteredBurgers = burgerItems.filter(b => b.meat === meatFilter);
-
-
-// <View style={{ flexDirection: 'row', paddingHorizontal: 10, marginBottom: 8 }}>
-//         <TouchableOpacity
-//             onPress={() => setMeatFilter('beef')}
-//             style={{
-//             backgroundColor: meatFilter === 'beef' ? '#c52a59ff' : '#59595993',
-//             paddingVertical: 6,
-//             paddingHorizontal: 14,
-//             borderRadius: 20,
-//             marginRight: 8,
-//             }}
-//         >
-//             <Text style={{ color: 'white', fontSize: 12 }}>Beef</Text>
-//         </TouchableOpacity>
-//         <TouchableOpacity
-//             onPress={() => setMeatFilter('chicken')}
-//             style={{
-//             backgroundColor: meatFilter === 'chicken' ? '#c52a59ff' : '#59595993',
-//             paddingVertical: 6,
-//             paddingHorizontal: 14,
-//             borderRadius: 20,
-//             }}
-//         >
-//             <Text style={{ color: 'white', fontSize: 12 }}>Chicken</Text>
-//         </TouchableOpacity>
-//         </View>
