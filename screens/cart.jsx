@@ -1,25 +1,34 @@
-
 import React, {useState} from "react";
 import { useEffect } from "react";
 import styles from '../styles/styles.jsx';
 import CardGrid from '../components/cardGrid.jsx'
 import { StatusBar, StyleSheet, useColorScheme, View, Text, Button, ScrollView, TouchableOpacity, ImageBackground, Image, Platform } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import {getCategories, getProductsWithImageUrls} from '../services/productsApi.js';
 import { getCartItems } from "../services/cartApi.js";
+import {delItemFromCart} from '../services/cartApi.js';
+
+
 
 const Cart = () => {
     const [cartItems, setCartItems] = useState([]);
-
-    useEffect(() => {
-        const fetchCartItems = async () => {
+    const fetchCartItems = async () => {
             const data = await getCartItems();
             console.log('Fetched cart items:', data);
             const productsWithImages = await getProductsWithImageUrls(data);
             setCartItems(productsWithImages);
         };
-        fetchCartItems();
-    });
+    
+    (
+        React.useCallback(() => {
+            fetchCartItems();
+        }, [])
+    );
+
+    const handleDeleteItem = async (itemId) => {
+        await delItemFromCart(itemId);
+        await fetchCartItems(); 
+    };
 
     return (
         <ScrollView>
@@ -29,7 +38,7 @@ const Cart = () => {
                 <Text style={styles.text}>Cart</Text>
                 <View style={{ flexDirection: 'row', paddingHorizontal: 10, marginBottom: 8 }}>
                 </View>
-                <CardGrid cart_bool={false} items={cartItems} />
+                <CardGrid cart_bool={true} items={cartItems} cart_function={handleDeleteItem} cart_text={'Delete'}/>
             </View>
             
             <ImageBackground 

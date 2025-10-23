@@ -6,7 +6,7 @@ import Card from './card.jsx'
 const ITEM_SPACING = 30;
 
 
-const CardGrid = ({ cart_bool, items = [], onItemPress }) => {
+const CardGrid = ({ cart_bool, items = [], onItemPress, cart_function, cart_text }) => {
 return (
     <View 
     style={{
@@ -28,7 +28,7 @@ return (
 
       }}
         >
-          <Card cart_bool={cart_bool} {...item} itemId={item.id} />
+          <Card cart_bool={cart_bool} {...item} itemId={item.id} cart_function={cart_function} cart_text={cart_text} />
         </Pressable>
     ))}
     </View>

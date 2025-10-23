@@ -3,17 +3,17 @@ import {addItemToCart} from '../services/cartApi.js';
 
 
 
-function AddToCartButton({cart_bool, itemId, title}) {
+function AddToCartButton({cart_bool, cart_text, cart_function, itemId, title}) {
     if (cart_bool) {
         return (
-            <TouchableOpacity onPress={() => {addItemToCart(itemId, title)}} style={{ backgroundColor: '#ffcc00', paddingHorizontal: 12, paddingVertical: 6, borderRadius: 20, marginBottom: 10 }}>
-                <Text style={{ fontWeight: 'bold' }}>Add to Cart</Text>
+            <TouchableOpacity onPress={() => {cart_function(itemId, title)}} style={{ backgroundColor: '#ffcc00', paddingHorizontal: 12, paddingVertical: 6, borderRadius: 20, marginBottom: 10 }}>
+                <Text style={{ fontWeight: 'bold' }}>{cart_text}</Text>
             </TouchableOpacity>
         );
     }
 }
 
-const Card = ({ cart_bool, title, image, itemId }) => {
+const Card = ({ cart_bool, title, image, itemId, cart_function, cart_text }) => {
     const imageSource = typeof image === 'string' ? { uri: image } : image;
     
     return(
@@ -21,7 +21,7 @@ const Card = ({ cart_bool, title, image, itemId }) => {
         <Image source={imageSource} style={{ margin : -20, width:100, height:100 }}/>
         <Text style={{fontWeight:900, fontSize:15, margin : 8}}>{title}</Text>
 
-        <AddToCartButton cart_bool={cart_bool} itemId={itemId} title={title} />
+        <AddToCartButton cart_bool={cart_bool} itemId={itemId} title={title} cart_function={cart_function} cart_text={cart_text} />
     </View>
 )
 };

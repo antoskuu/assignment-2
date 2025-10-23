@@ -4,6 +4,7 @@ import CardGrid from '../components/cardGrid.jsx'
 import { StatusBar, StyleSheet, useColorScheme, View, Text, Button, ScrollView, TouchableOpacity, ImageBackground, Image, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { getProductsWithImageUrls } from "../services/productsApi.js";
+import {addItemToCart} from '../services/cartApi.js';
 
 const CategoryDetailScreen = ({route}) => {
     const { categoryTitle, categoryItems } = route.params;
@@ -24,8 +25,8 @@ const CategoryDetailScreen = ({route}) => {
             <Text style={{ fontSize: 24 }}>←</Text>
         </TouchableOpacity>        
         <Text style={styles.text}>{categoryTitle}</Text>
-        
-        <CardGrid cart_bool={true} items={itemsWithImageUrls} />
+
+        <CardGrid cart_bool={true} items={itemsWithImageUrls} cart_function={addItemToCart} cart_text={"Add to Cart"} />
     </View>
 
 

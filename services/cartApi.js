@@ -3,6 +3,8 @@ import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
 import { API_BASE } from './config.js';
 
+
+
 const CART_ID_KEY = 'cartId';
 
 const getCartId = async () => {
@@ -21,6 +23,7 @@ const getCartId = async () => {
 
 
 export const addItemToCart = async (itemId, title) => {
+
     const cartId = await getCartId();
     const response = await fetch (`${API_BASE}/cart?id=${itemId}&title=${title}&user_id=${cartId}`, {
         method: 'POST',
@@ -30,6 +33,7 @@ export const addItemToCart = async (itemId, title) => {
     });
     console.log('Response status for adding item to cart:', response.status);
     parseInt(response.status) >= 400 && console.warn('Error adding item to cart:', response.status);
+
     return response.json();
 };
 
@@ -40,4 +44,20 @@ export const getCartItems = async () => {
     const response = await fetch(`${API_BASE}/cart?user_id=${cartId}`);
     const data = await response.json();
     return data;
+};
+
+
+
+export const delItemFromCart = async (itemId) => {
+    const cartId = await getCartId();
+    const response = await fetch (`${API_BASE}/cart?id=${itemId}&user_id=${cartId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+    console.log('Response status for deleting item from cart:', response.status);
+    parseInt(response.status) >= 400 && console.warn('Error deleting item from cart:', response.status);
+
+    return response.json();
 };
