@@ -68,7 +68,7 @@ export default function App() {
             headerShown:false, 
             tabBarIcon: ({ color, size, focused }) => (
               <Image
-                source={require('./assets/app/burger.png')}
+                source={require('./assets/app/cart.png')}
                 style={{
                   width: size,
                   height: size,
