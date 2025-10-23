@@ -28,7 +28,7 @@ return (
 
       }}
         >
-          <Card cart_bool={cart_bool} {...item} />
+          <Card cart_bool={cart_bool} {...item} itemId={item.id} />
         </Pressable>
     ))}
     </View>

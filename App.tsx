@@ -6,7 +6,7 @@ import MenuScreen from './screens/menu.jsx'
 import { Image } from 'react-native';
 import CategoryDetailScreen from './screens/detailofcategory.jsx'
 import { SafeAreaView } from 'react-native-safe-area-context';
-
+import Cart from './screens/cart.jsx';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -63,6 +63,22 @@ export default function App() {
               />
             ),
             tabBarLabel: 'Menu'
+          }}/>
+          <Tab.Screen name="CartTab" component={Cart} options={{
+            headerShown:false, 
+            tabBarIcon: ({ color, size, focused }) => (
+              <Image
+                source={require('./assets/app/burger.png')}
+                style={{
+                  width: size,
+                  height: size,
+                  tintColor: color,
+                  opacity: focused ? 1 : 0.6
+                }}
+                resizeMode="contain"
+              />
+            ),
+            tabBarLabel: 'Cart'
           }}/>
       </Tab.Navigator>
     </NavigationContainer>
