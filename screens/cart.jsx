@@ -19,7 +19,7 @@ const Cart = () => {
             setCartItems(productsWithImages);
         };
     
-    (
+    useFocusEffect(
         React.useCallback(() => {
             fetchCartItems();
         }, [])
