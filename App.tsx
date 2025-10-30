@@ -7,6 +7,7 @@ import { Image } from 'react-native';
 import CategoryDetailScreen from './screens/detailofcategory.jsx'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Cart from './screens/cart.jsx';
+import Settings from './screens/settings.jsx';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -21,8 +22,16 @@ function HomeStack() {
 function MenuStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Settings" component={MenuScreen} options={{headerShown:false}}/>
+      <Stack.Screen name="Menu" component={MenuScreen} options={{headerShown:false}}/>
       <Stack.Screen name="CategoryDetail" component={CategoryDetailScreen} options={{headerShown:false}}/>
+    </Stack.Navigator>
+  );
+}
+
+function SettingsStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Settings" component={Settings} options={{headerShown:false}}/>
     </Stack.Navigator>
   );
 }
@@ -79,6 +88,22 @@ export default function App() {
               />
             ),
             tabBarLabel: 'Cart'
+          }}/>
+          <Tab.Screen name="SettingsTab" component={SettingsStack} options={{
+            headerShown:false, 
+            tabBarIcon: ({ color, size, focused }) => (
+              <Image
+                source={require('./assets/app/profile.png')}
+                style={{
+                  width: size,
+                  height: size,
+                  tintColor: color,
+                  opacity: focused ? 1 : 0.6
+                }}
+                resizeMode="contain"
+              />
+            ),
+            tabBarLabel: 'Profile'
           }}/>
       </Tab.Navigator>
     </NavigationContainer>
